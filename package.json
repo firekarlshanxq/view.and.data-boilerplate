@@ -1,0 +1,28 @@
+{
+	"name": "ADNViewerBoilerplate",
+	"description": "A basic node.js server/client boiler plate for View&Data API",
+	"version": "1.0.0",
+	"dependencies": {
+		"serve-favicon": ">= 2.2.0",
+		"express": ">= 4.12.3",
+		"request": ">= 2.55.0"
+	},
+	"files": [
+		"LICENSE",
+		"README.md"
+	],
+	"engines": {
+		"node": ">= 0.10.0"
+	},
+	"contributors": [
+		"Philippe Leefsma <philippe.leefsma@autodesk.com>"
+	],
+	"license": "MIT",
+	"scripts": {
+		"start": "node server.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Developer-Autodesk/view.and.data.api-boilerplate.git"
+	}
+}
