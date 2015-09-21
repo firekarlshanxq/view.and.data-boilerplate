@@ -37,7 +37,7 @@ Basic boilerplate project for View & Data API using a node server
 
 ## License
 
-T[MIT License](http://opensource.org/licenses/MIT).
+[MIT License](http://opensource.org/licenses/MIT).
 
 ## Written by 
 
