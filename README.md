@@ -25,20 +25,22 @@ Basic boilerplate project for View & Data API using a node server
   var urn = '<replace with your encoded urn>';
   ```
 * Install node dependencies, by running the following command: <br />
-```
-npm install
-```
+  ```
+  npm install
+  ```
 * Run the server from the Node.js console, by running the following command: <br />
   ```
   node server.js
   ```
+
 * Connect to you local server using a WebGL-compatible browser: [http://localhost:3000/](http://localhost:3000/)
 
 ## License
 
-That samples are licensed under the terms of the [MIT License](http://opensource.org/licenses/MIT). Please see the [LICENSE](LICENSE) file for full details.
+T[MIT License](http://opensource.org/licenses/MIT).
 
 ## Written by 
 
-Written by [Philippe Leefsma](http://adndevblog.typepad.com/cloud_and_mobile/philippe-leefsma.html), Autodesk Developer Network.
+Written by [Philippe Leefsma](http://adndevblog.typepad.com/cloud_and_mobile/philippe-leefsma.html)
+Autodesk Developer Network.
 
