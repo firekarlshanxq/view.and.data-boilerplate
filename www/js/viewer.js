@@ -39,10 +39,27 @@ var getToken = function () {
 //////////////////////////////////////////////////////////////////////////
 function onload() {
 
+    //List of Supported Languages:
+    // Chinese Simplified: zh-cn
+    // Chinese Traditional: zh-tw
+    // Czech: cs
+    // English: en
+    // French: fr
+    // German: de
+    // Italian: it
+    // Japanese: ja
+    // Korean: ko
+    // Polish: pl
+    // Portuguese Brazil: pt-br
+    // Russian: ru
+    // Spanish: es
+    // Turkish: tr
+
     var options = {
-        env: 'AutodeskProduction',
-        getAccessToken: getToken,
-        refreshToken: getToken
+      language:'en', //default - en
+      env: 'AutodeskProduction',
+      getAccessToken: getToken,
+      refreshToken: getToken
     };
 
     urn = Autodesk.Viewing.Private.getParameterByName('urn') || urn;
