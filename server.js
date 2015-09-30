@@ -15,20 +15,33 @@
 // DOES NOT WARRANT THAT THE OPERATION OF THE PROGRAM WILL BE
 // UNINTERRUPTED OR ERROR FREE.
 /////////////////////////////////////////////////////////////////////////////////
-var config = require('./config/server-config');
+var lmvConfig = require('./config/config-view-and-data');
 var favicon = require('serve-favicon');
+var Lmv = require('view-and-data');
 var express = require('express');
 
 var app = express();
 
 app.use('/', express.static(__dirname + '/www/'));
 app.use(favicon(__dirname + '/www/img/favicon.ico'));
-app.use('/api/token', require('./routes/api/token')(config));
+
+var lmv = new Lmv(lmvConfig);
+
+//async init of our token API
+lmv.initialise().then(
+  function() {
+
+    app.use('/api/token', require('./routes/api/token')(lmv));
+
+  }, function(error) {
+
+    console.log(error);
+  });
 
 app.set('port', process.env.PORT || 3000);
 
 var server = app.listen(app.get('port'), function() {
 
-    console.log('Server listening on port: ' +
-        server.address().port);
+    console.log('Server listening on: ');
+    console.log(server.address());
 });

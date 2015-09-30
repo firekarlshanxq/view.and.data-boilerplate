@@ -90,6 +90,8 @@ function initializeViewer(containerId, urn, role) {
 
         viewer.start();
 
+        viewer.impl.setLightPreset(8);
+
         viewer.addEventListener(
           Autodesk.Viewing.GEOMETRY_LOADED_EVENT,
           onGeometryLoaded);

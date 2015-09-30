@@ -1,16 +1,13 @@
 {
-	"name": "ADNViewerBoilerplate",
+	"name": "ADN-Viewer-Boilerplate",
 	"description": "A basic node.js server/client boiler plate for View&Data API",
 	"version": "1.0.0",
 	"dependencies": {
 		"serve-favicon": ">= 2.2.0",
 		"express": ">= 4.12.3",
-		"request": ">= 2.55.0"
+		"request": ">= 2.55.0",
+        "view-and-data": "1.0.0"
 	},
-	"files": [
-		"LICENSE",
-		"README.md"
-	],
 	"engines": {
 		"node": ">= 0.10.0"
 	},

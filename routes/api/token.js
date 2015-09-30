@@ -15,10 +15,9 @@
 // DOES NOT WARRANT THAT THE OPERATION OF THE PROGRAM WILL BE
 // UNINTERRUPTED OR ERROR FREE.
 /////////////////////////////////////////////////////////////////////////////////
-var express = require('express') ;
-var request = require('request') ;
+var express = require('express');
 
-module.exports = function(config) {
+module.exports = function(lmv) {
 
     var router = express.Router();
 
@@ -27,13 +26,16 @@ module.exports = function(config) {
     ///////////////////////////////////////////////////////////////////////////////
     router.get('/', function (req, res) {
 
-        request.post(
-          config.AUTHENTICATE_URL,
-          {form: config.credentials},
-          function (error, response, body) {
-              if (!error && response.statusCode == 200)
-                  res.send(body);
-          });
+      lmv.getToken().then(
+        function(response){
+
+          res.json(response);
+        },
+        function(error){
+
+          res.status(error.statusCode || 404);
+          res.json(error);
+        });
     });
 
     return router;
