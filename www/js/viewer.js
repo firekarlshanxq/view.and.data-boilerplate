@@ -85,8 +85,13 @@ function initializeViewer(containerId, urn, role) {
           { 'type': 'geometry', 'role': role },
           true);
 
-        var viewer = new Autodesk.Viewing.Private.GuiViewer3D(
-          document.getElementById(containerId));
+        var domContainer = document.getElementById(containerId);
+
+        //Control-less Version
+        //var viewer = new Autodesk.Viewing.Viewer3D(domContainer);
+
+        //GUI Version
+        var viewer = new Autodesk.Viewing.Private.GuiViewer3D(domContainer);
 
         viewer.start();
 
