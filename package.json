@@ -6,7 +6,7 @@
 		"serve-favicon": ">= 2.2.0",
 		"express": ">= 4.12.3",
 		"request": ">= 2.55.0",
-        "view-and-data": "1.0.2"
+        "view-and-data": "1.0.6"
 	},
 	"engines": {
 		"node": ">= 0.10.0"

@@ -28,7 +28,8 @@ app.use(favicon(__dirname + '/www/img/favicon.ico'));
 var lmv = new Lmv(lmvConfig);
 
 //async init of our token API
-lmv.initialise().then(
+lmv.initialize().then(
+
   function() {
 
     app.use('/api/token', require('./routes/api/token')(lmv));
