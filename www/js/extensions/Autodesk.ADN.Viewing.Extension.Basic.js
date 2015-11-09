@@ -19,7 +19,7 @@ Autodesk.ADN.Viewing.Extension.Basic = function (viewer, options) {
 
     _thisExtension.unload = function () {
 
-        console.log('Autodesk.ADN.Viewing.Extension.Basic unloaded');
+        alert('Autodesk.ADN.Viewing.Extension.Basic unloaded');
         return true;
     };
 };

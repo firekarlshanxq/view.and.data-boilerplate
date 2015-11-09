@@ -17,26 +17,32 @@
 ////////////////////////////////////////////////////////////////////////////////-->
 <html>
 <head>
-
     <title>ADN Viewer Boilerplate</title>
-
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
-
-    <script src="https://code.jquery.com/jquery-2.1.2.min.js"></script>
-
     <link type="text/css" rel="stylesheet" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/style.css?v=v1.2.19"/>
-
-    <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/three.min.js?v=v1.2.19"></script>
-    <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js?v=v1.2.19"></script>
-
-    <script src="js/viewer.js"></script>
-    <script src="js/extensions/Autodesk.ADN.Viewing.Extension.Basic.js"></script>
-
+    <link type="text/css" rel="stylesheet" href="css/app.css"/>
 </head>
 
 <body style="margin:0" onload="onload()">
 
-	<div id="viewer"></div>
+  <button class="extension-btn" style="top: 10px;" onclick="loadExtension()">
+      Load Extension
+  </button>
+
+  <button class="extension-btn" style="top: 40px;" onclick="unloadExtension()">
+      Unload Extension
+  </button>
+
+	<div id="viewer"> </div>
+
+
+  <script src="https://code.jquery.com/jquery-2.1.2.min.js"></script>
+
+  <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/three.min.js?v=v1.2.19"></script>
+  <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js?v=v1.2.19"></script>
+
+  <script src="js/viewer.js"></script>
+  <script src="js/extensions/Autodesk.ADN.Viewing.Extension.Basic.js"></script>
 	
 </body>
 </html>

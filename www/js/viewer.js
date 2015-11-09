@@ -17,6 +17,8 @@
 /////////////////////////////////////////////////////////////////////////////////
 var urn = '<replace with your document url - use http://models.autodesk.io to quickly upload models if needed>';
 
+var viewer = null;
+
 //////////////////////////////////////////////////////////////////////////
 // Get token from our API URL.
 // Current View & Data API requires a synchronous method
@@ -88,14 +90,14 @@ function initializeViewer(containerId, urn, role) {
         var domContainer = document.getElementById(containerId);
 
         //Control-less Version
-        //var viewer = new Autodesk.Viewing.Viewer3D(domContainer);
+        //viewer = new Autodesk.Viewing.Viewer3D(domContainer);
 
         //GUI Version
-        var viewer = new Autodesk.Viewing.Private.GuiViewer3D(domContainer);
+        viewer = new Autodesk.Viewing.Private.GuiViewer3D(domContainer);
 
-        viewer.start();
+        viewer.initialize();
 
-        viewer.impl.setLightPreset(8);
+        viewer.setLightPreset(8);
 
         viewer.addEventListener(
           Autodesk.Viewing.GEOMETRY_LOADED_EVENT,
@@ -121,9 +123,25 @@ function onGeometryLoaded(event) {
       Autodesk.Viewing.GEOMETRY_LOADED_EVENT,
       onGeometryLoaded);
 
-    var options = {};
+    alert('Geometry Loaded!');
+}
 
-    viewer.loadExtension(
-      'Autodesk.ADN.Viewing.Extension.Basic',
-      options);
+//////////////////////////////////////////////////////////////////////////
+// Load custom extension
+//
+//////////////////////////////////////////////////////////////////////////
+function loadExtension() {
+
+  var options = {};
+
+  viewer.loadExtension('Autodesk.ADN.Viewing.Extension.Basic', options);
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Load custom extension
+//
+//////////////////////////////////////////////////////////////////////////
+function unloadExtension() {
+
+  viewer.unloadExtension('Autodesk.ADN.Viewing.Extension.Basic');
 }
