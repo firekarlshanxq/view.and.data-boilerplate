@@ -26,13 +26,13 @@ var viewer = null;
 //////////////////////////////////////////////////////////////////////////
 var getToken = function () {
 
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", '/api/token', false);
-    xhr.send(null);
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", '/api/token', false);
+  xhr.send(null);
 
-    var response = JSON.parse(xhr.responseText);
+  var response = JSON.parse(xhr.responseText);
 
-    return response.access_token;
+  return response.access_token;
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -41,35 +41,35 @@ var getToken = function () {
 //////////////////////////////////////////////////////////////////////////
 function onload() {
 
-    //List of Supported Languages:
-    // Chinese Simplified: zh-cn
-    // Chinese Traditional: zh-tw
-    // Czech: cs
-    // English: en
-    // French: fr
-    // German: de
-    // Italian: it
-    // Japanese: ja
-    // Korean: ko
-    // Polish: pl
-    // Portuguese Brazil: pt-br
-    // Russian: ru
-    // Spanish: es
-    // Turkish: tr
+  urn = Autodesk.Viewing.Private.getParameterByName('urn') || urn;
 
-    var options = {
-      language:'en', //default - en
-      env: 'AutodeskProduction',
-      getAccessToken: getToken,
-      refreshToken: getToken
-    };
+  //List of Supported Languages:
+  // Chinese Simplified: zh-cn
+  // Chinese Traditional: zh-tw
+  // Czech: cs
+  // English: en
+  // French: fr
+  // German: de
+  // Italian: it
+  // Japanese: ja
+  // Korean: ko
+  // Polish: pl
+  // Portuguese Brazil: pt-br
+  // Russian: ru
+  // Spanish: es
+  // Turkish: tr
+  
+  var options = {
+    language:'en', //default - en
+    env: 'AutodeskProduction',
+    getAccessToken: getToken,
+    refreshToken: getToken
+  };
 
-    urn = Autodesk.Viewing.Private.getParameterByName('urn') || urn;
+  Autodesk.Viewing.Initializer(options, function () {
 
-    Autodesk.Viewing.Initializer(options, function () {
-
-        initializeViewer('viewer', 'urn:' + urn, '3d');
-    });
+    initializeViewer('viewer', 'urn:' + urn, '3d');
+  });
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -78,45 +78,45 @@ function onload() {
 //////////////////////////////////////////////////////////////////////////
 function initializeViewer(containerId, urn, role) {
 
-    Autodesk.Viewing.Document.load(urn, function (model) {
+  Autodesk.Viewing.Document.load(urn, function (model) {
 
-        var rootItem = model.getRootItem();
+    var rootItem = model.getRootItem();
 
-        var geometryItems = Autodesk.Viewing.Document.getSubItemsWithProperties(
-          rootItem,
-          { 'type': 'geometry', 'role': role },
-          true);
+    var geometryItems = Autodesk.Viewing.Document.getSubItemsWithProperties(
+      rootItem,
+      { 'type': 'geometry', 'role': role },
+      true);
 
-        var domContainer = document.getElementById(containerId);
+    var domContainer = document.getElementById(containerId);
 
-        //Control-less Version
-        //viewer = new Autodesk.Viewing.Viewer3D(domContainer);
+    //Control-less Version
+    //viewer = new Autodesk.Viewing.Viewer3D(domContainer);
 
-        //GUI Version
-        viewer = new Autodesk.Viewing.Private.GuiViewer3D(domContainer);
+    //GUI Version
+    viewer = new Autodesk.Viewing.Private.GuiViewer3D(domContainer);
 
-        viewer.initialize();
+    viewer.initialize();
 
-        viewer.setLightPreset(8);
+    viewer.setLightPreset(8);
 
-        viewer.addEventListener(
-          Autodesk.Viewing.GEOMETRY_LOADED_EVENT,
-          onGeometryLoaded);
+    viewer.addEventListener(
+      Autodesk.Viewing.GEOMETRY_LOADED_EVENT,
+      onGeometryLoaded);
 
-        var options = {
-          globalOffset: {
-            x: 0, y: 0, z: 0
-          }
-        }
+    var options = {
+      globalOffset: {
+        x: 0, y: 0, z: 0
+      }
+    }
 
-        viewer.loadModel(
-          model.getViewablePath(geometryItems[0]),
-          options);
-        
-    }, function (msg) {
+    viewer.loadModel(
+      model.getViewablePath(geometryItems[0]),
+      options);
 
-        console.log('Error loading document: ' + msg);
-    });
+  }, function (msg) {
+
+    console.log('Error loading document: ' + msg);
+  });
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -125,13 +125,13 @@ function initializeViewer(containerId, urn, role) {
 //////////////////////////////////////////////////////////////////////////
 function onGeometryLoaded(event) {
 
-    var viewer = event.target;
+  var viewer = event.target;
 
-    viewer.removeEventListener(
-      Autodesk.Viewing.GEOMETRY_LOADED_EVENT,
-      onGeometryLoaded);
+  viewer.removeEventListener(
+    Autodesk.Viewing.GEOMETRY_LOADED_EVENT,
+    onGeometryLoaded);
 
-    alert('Geometry Loaded!');
+  alert('Geometry Loaded!');
 }
 
 //////////////////////////////////////////////////////////////////////////
