@@ -102,8 +102,16 @@ function initializeViewer(containerId, urn, role) {
         viewer.addEventListener(
           Autodesk.Viewing.GEOMETRY_LOADED_EVENT,
           onGeometryLoaded);
-        
-        viewer.load(model.getViewablePath(geometryItems[0]));
+
+        var options = {
+          globalOffset: {
+            x: 0, y: 0, z: 0
+          }
+        }
+
+        viewer.loadModel(
+          model.getViewablePath(geometryItems[0]),
+          options);
         
     }, function (msg) {
 
