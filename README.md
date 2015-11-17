@@ -8,7 +8,7 @@ Basic boilerplate project for View & Data API using a node server
 ## Setup/Usage Instructions
  
 * Request your own API keys from our developer portal: [developer.autodesk.com](http://developer.autodesk.com)
-* Replace the placeholders with your own keys in config-view-and-data.js.js or use ENV variables:<br />
+* Replace the placeholders with your own keys in config-view-and-data.js or use ENV variables:<br />
   ```
   ConsumerKey: process.env.CONSUMERKEY || '<replace with your consumer key>',
   ConsumerSecret: process.env.CONSUMERSECRET || '<replace with your consumer secret>',
