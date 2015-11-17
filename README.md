@@ -8,11 +8,10 @@ Basic boilerplate project for View & Data API using a node server
 ## Setup/Usage Instructions
  
 * Request your own API keys from our developer portal: [developer.autodesk.com](http://developer.autodesk.com)
-* Replace the placeholders with your own keys in server-config.js or use ENV variables:<br />
+* Replace the placeholders with your own keys in config-view-and-data.js.js or use ENV variables:<br />
   ```
-  client_id: process.env.CONSUMERKEY || '<replace with your consumer key>',
-  
-  client_secret: process.env.CONSUMERSECRET || '<replace with your consumer secret>',
+  ConsumerKey: process.env.CONSUMERKEY || '<replace with your consumer key>',
+  ConsumerSecret: process.env.CONSUMERSECRET || '<replace with your consumer secret>',
   ```
 
 * Upload one of your models to your account and get its URN using another workflow sample, for example:
