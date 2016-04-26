@@ -7,7 +7,7 @@ module.exports = {
 
   credentials: {
 
-    ConsumerKey: process.env.CONSUMERKEY,
-    ConsumerSecret: process.env.CONSUMERSECRET
+    ConsumerKey: process.env.LMV_CONSUMERKEY,
+    ConsumerSecret: process.env.LMV_CONSUMERSECRET
   }
 }

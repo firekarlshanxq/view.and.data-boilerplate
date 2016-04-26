@@ -1,4 +1,4 @@
-/////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 // Copyright (c) Autodesk, Inc. All rights reserved
 // Written by Philippe Leefsma 2014 - ADN/Developer Technical Services
 //
@@ -14,10 +14,7 @@
 // MERCHANTABILITY OR FITNESS FOR A PARTICULAR USE.  AUTODESK, INC.
 // DOES NOT WARRANT THAT THE OPERATION OF THE PROGRAM WILL BE
 // UNINTERRUPTED OR ERROR FREE.
-/////////////////////////////////////////////////////////////////////////////////
-var urn = '<replace with your document url - use http://models.autodesk.io to quickly upload models if needed>';
-
-var viewer = null;
+//////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////
 // Get token from our API URL.
@@ -41,7 +38,8 @@ var getToken = function () {
 //////////////////////////////////////////////////////////////////////////
 function onload() {
 
-  urn = Autodesk.Viewing.Private.getParameterByName('urn') || urn;
+  //Tip: use http://models.autodesk.io to quickly upload models'
+  var urn = 'Base64-encoded document URN';
 
   //List of Supported Languages:
   // Chinese Simplified: zh-cn
@@ -63,12 +61,13 @@ function onload() {
     language:'en', //default - en
     env: 'AutodeskProduction',
     getAccessToken: getToken,
-    refreshToken: getToken
+    refreshToken: getToken,
+    urn: Autodesk.Viewing.Private.getParameterByName('urn') || urn
   };
 
   Autodesk.Viewing.Initializer(options, function () {
 
-    initializeViewer('viewer', 'urn:' + urn, '3d');
+    initializeViewer('viewer', 'urn:' + options.urn);
   });
 }
 
@@ -76,29 +75,54 @@ function onload() {
 // Initialize viewer and load model
 //
 //////////////////////////////////////////////////////////////////////////
-function initializeViewer(containerId, urn, role) {
+function initializeViewer(containerId, urn) {
 
   Autodesk.Viewing.Document.load(urn, function (model) {
 
     var rootItem = model.getRootItem();
 
-    var geometryItems = Autodesk.Viewing.Document.getSubItemsWithProperties(
+    // Grab all 3D items
+    var geometryItems3d = Autodesk.Viewing.Document.getSubItemsWithProperties(
       rootItem,
-      { 'type': 'geometry', 'role': role },
+      { 'type': 'geometry', 'role': '3d' },
+      true);
+
+    // Grab all 2D items
+    var geometryItems2d = Autodesk.Viewing.Document.getSubItemsWithProperties(
+      rootItem,
+      { 'type': 'geometry', 'role': '2d' },
       true);
 
     var domContainer = document.getElementById(containerId);
 
-    //Control-less Version
+    //UI-less Version: viewer without any Autodesk buttons and commands
     //viewer = new Autodesk.Viewing.Viewer3D(domContainer);
 
-    //GUI Version
+    //GUI Version: viewer with controls
     viewer = new Autodesk.Viewing.Private.GuiViewer3D(domContainer);
 
     viewer.initialize();
 
     viewer.setLightPreset(8);
 
+    //Button events
+    var loadBtn = document.getElementById('loadBtn');
+
+    loadBtn.addEventListener("click", function(){
+
+      loadExtension(viewer);
+    });
+
+    var unloadBtn = document.getElementById('unloadBtn');
+
+    unloadBtn.addEventListener("click", function(){
+
+      unloadExtension(viewer);
+    });
+
+    // Illustrates how to listen to events
+    // Geometry loaded is fired once the model is fully loaded
+    // It is safe to perform operation involving model structure at this point
     viewer.addEventListener(
       Autodesk.Viewing.GEOMETRY_LOADED_EVENT,
       onGeometryLoaded);
@@ -109,13 +133,18 @@ function initializeViewer(containerId, urn, role) {
       }
     }
 
+    // Pick the first 3D item ortherwise first 2D item
+    var viewablePath = (geometryItems3d.length ?
+      geometryItems3d[0] :
+      geometryItems2d[0]);
+
     viewer.loadModel(
-      model.getViewablePath(geometryItems[0]),
+      model.getViewablePath(viewablePath),
       options);
 
-  }, function (msg) {
+  }, function(err) {
 
-    console.log('Error loading document: ' + msg);
+    logError(err);
   });
 }
 
@@ -138,18 +167,76 @@ function onGeometryLoaded(event) {
 // Load custom extension
 //
 //////////////////////////////////////////////////////////////////////////
-function loadExtension() {
+function loadExtension(viewer) {
 
   var options = {};
 
-  viewer.loadExtension('Autodesk.ADN.Viewing.Extension.Basic', options);
+  var res = viewer.loadExtension(
+    'Autodesk.ADN.Viewing.Extension.Basic',
+    options);
 }
 
 //////////////////////////////////////////////////////////////////////////
 // Load custom extension
 //
 //////////////////////////////////////////////////////////////////////////
-function unloadExtension() {
+function unloadExtension(viewer) {
 
-  viewer.unloadExtension('Autodesk.ADN.Viewing.Extension.Basic');
+  var res = viewer.unloadExtension(
+    'Autodesk.ADN.Viewing.Extension.Basic');
 }
+
+//////////////////////////////////////////////////////////////////////////
+// Log viewer errors with more explicit message
+//
+//////////////////////////////////////////////////////////////////////////
+function logError(err) {
+
+  switch(err){
+
+    case 1: //Autodesk.Viewing.ErrorCode.UNKNOWN_FAILURE
+      console.log('An unknown failure has occurred.');
+      break;
+
+    case 2: //Autodesk.Viewing.ErrorCode.BAD_DATA
+      console.log('Bad data (corrupted or malformed) was encountered.');
+      break;
+
+    case 3: //Autodesk.Viewing.ErrorCode.NETWORK_FAILURE
+      console.log('A network failure was encountered.');
+      break;
+
+    case 4: //Autodesk.Viewing.ErrorCode.NETWORK_ACCESS_DENIED
+      console.log('Access was denied to a network resource (HTTP 403).');
+      break;
+
+    case 5: //Autodesk.Viewing.ErrorCode.NETWORK_FILE_NOT_FOUND
+      console.log('A network resource could not be found (HTTP 404).');
+      break;
+
+    case 6: //Autodesk.Viewing.ErrorCode.NETWORK_SERVER_ERROR
+      console.log('A server error was returned when accessing a network resource (HTTP 5xx).');
+      break;
+
+    case 7: //Autodesk.Viewing.ErrorCode.NETWORK_UNHANDLED_RESPONSE_CODE
+      console.log('An unhandled response code was returned when accessing a network resource (HTTP everything else).');
+      break;
+
+    case 8: //Autodesk.Viewing.ErrorCode.BROWSER_WEBGL_NOT_SUPPORTED
+      console.log('Browser error: WebGL is not supported by the current browser.');
+      break;
+
+    case 9: //Autodesk.Viewing.ErrorCode.BAD_DATA_NO_VIEWABLE_CONTENT
+      console.log('There is nothing viewable in the fetched document.');
+      break;
+
+    case 10: //Autodesk.Viewing.ErrorCode.BROWSER_WEBGL_DISABLED
+      console.log('Browser error: WebGL is supported, but not enabled.');
+      break;
+
+    case 11: //Autodesk.Viewing.ErrorCode.RTC_ERROR
+      console.log('Collaboration server error');
+      break;
+  }
+}
+

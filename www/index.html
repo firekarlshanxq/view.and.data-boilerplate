@@ -18,25 +18,24 @@
 <html>
 <head>
     <title>ADN Viewer Boilerplate</title>
+    <link type="text/css" rel="stylesheet" href="https://autodeskviewer.com/viewers/2.5/style.min.css"/>
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
-    <link type="text/css" rel="stylesheet" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/style.css?v=v1.2.22"/>
     <link type="text/css" rel="stylesheet" href="css/app.css"/>
 </head>
 
-<body style="margin:0" onload="onload()">
+<body onload="onload()">
 
-  <button class="extension-btn" style="top: 10px;" onclick="loadExtension()">
+  <button id="loadBtn" class="extension-load-btn">
       Load Extension
   </button>
 
-  <button class="extension-btn" style="top: 40px;" onclick="unloadExtension()">
+  <button id="unloadBtn" class="extension-unload-btn">
       Unload Extension
   </button>
 
 	<div id="viewer"> </div>
 
-
-  <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js?v=v1.2.22"></script>
+  <script src="https://autodeskviewer.com/viewers/2.5/viewer3D.min.js"></script>
   <script src="js/extensions/Autodesk.ADN.Viewing.Extension.Basic.js"></script>
   <script src="js/viewer.js"></script>
 

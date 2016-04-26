@@ -16,6 +16,8 @@
 // UNINTERRUPTED OR ERROR FREE.
 /////////////////////////////////////////////////////////////////////////////////
 var lmvConfig = require('./config/config-view-and-data');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
 var favicon = require('serve-favicon');
 var Lmv = require('view-and-data');
 var express = require('express');
@@ -24,6 +26,9 @@ var app = express();
 
 app.use('/', express.static(__dirname + '/www/'));
 app.use(favicon(__dirname + '/www/img/favicon.ico'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(cookieParser());
 
 var lmv = new Lmv(lmvConfig);
 
